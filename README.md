@@ -154,21 +154,6 @@ python run_benchmark.py --data_root /path/to/your/data \
     --datasets ETTh1,ETTh2 --pred_lens 96,192 --epochs 5
 ```
 
-```bash
-# 🔬 Ablation study (physics components / tri-modal paths)
-python run_benchmark.py --data_root /path/to/your/data --ablation phys_no_mamba
-```
-
-```bash
-# 🚫 Disable the GPT-2 textual stream (degenerates to a physics-bias-only Transformer)
-python run_benchmark.py --data_root /path/to/your/data --no_gpt2
-```
-
-```bash
-# 🔊 Show full diagnostics with --verbose
-python run_benchmark.py --data_root /path/to/your/data \
-    --datasets weather --pred_lens 96 --verbose
-```
 
 ```bash
 # 👀 Dry run: list the experiments that would run, without training
@@ -197,52 +182,8 @@ python run_benchmark.py --datasets ETTh1,weather --pred_lens 96,192 --dry_run
 L = L_pred + λ_phys · L_phys
 ```
 
-where `L_phys = ||Δα||² + ||Δω||²` keeps the learnable residuals from drifting away from the DMD-initialized spectrum. ⚖️
 
-🤖 Dataset-adaptive policy:
-- Non-stationary datasets (e.g. `exchange_rate`) automatically set `λ_phys = 0`;
-- Large-variable datasets (`electricity` / `traffic`) automatically reduce capacity and increase regularization.
 
----
-
-## 📊 Benchmark Results
-
-> Config: `ablation=full` · `seq_len=96` · `epochs=30` · `use_gpt2=True` ⚡
-
-| 📁 Dataset | ⏱️ pred_len | val MSE | **test MSE** | **test MAE** |
-|------------|------------:|--------:|-------------:|-------------:|
-| 🌡️ ETTh1 | 96 | 0.6802 | **0.3687** | **0.3913** |
-| 🌡️ ETTh1 | 192 | 0.9948 | **0.4210** | **0.4222** |
-| 🌡️ ETTh1 | 336 | 1.2895 | **0.4640** | **0.4444** |
-| 🌡️ ETTh1 | 720 | 1.5585 | **0.4843** | **0.4746** |
-| 🌡️ ETTh2 | 96 | 0.2156 | **0.2940** | **0.3385** |
-| 🌡️ ETTh2 | 192 | 0.2819 | **0.3618** | **0.3865** |
-| 🌡️ ETTh2 | 336 | 0.3684 | **0.4072** | **0.4214** |
-| 🌡️ ETTh2 | 720 | 0.6159 | **0.4198** | **0.4389** |
-| ⏲️ ETTm1 | 96 | 0.3833 | **0.3186** | **0.3525** |
-| ⏲️ ETTm1 | 192 | 0.5114 | **0.3692** | **0.3820** |
-| ⏲️ ETTm1 | 336 | 0.6550 | **0.4018** | **0.4034** |
-| ⏲️ ETTm1 | 720 | 0.9715 | **0.4592** | **0.4384** |
-| ⏲️ ETTm2 | 96 | 0.1249 | **0.1758** | **0.2523** |
-| ⏲️ ETTm2 | 192 | 0.1687 | **0.2414** | **0.2962** |
-| ⏲️ ETTm2 | 336 | 0.2150 | **0.3045** | **0.3386** |
-| ⏲️ ETTm2 | 720 | 0.2875 | **0.4046** | **0.3977** |
-| 🌦️ weather | 96 | 0.2829 | **0.1677** | **0.1813** |
-| 🌦️ weather | 192 | 0.3428 | **0.2154** | **0.2230** |
-| 🌦️ weather | 336 | 0.4146 | **0.2760** | **0.2655** |
-| 🌦️ weather | 720 | 0.5469 | **0.3441** | **0.3086** |
-| 💱 exchange_rate | 96 | 0.1000 | **0.0815** | **0.2056** |
-| 💱 exchange_rate | 192 | 0.1785 | **0.1491** | **0.2865** |
-| 💱 exchange_rate | 336 | 0.3088 | **0.2654** | **0.3877** |
-| 💱 exchange_rate | 720 | 0.6032 | **0.5881** | **0.6184** |
-| 🔌 electricity | 96 | 0.1987 | **0.2127** | **0.2905** |
-| 🔌 electricity | 192 | 0.2089 | **0.2138** | **0.2956** |
-| 🔌 electricity | 336 | 0.2273 | **0.2256** | **0.3084** |
-| 🔌 electricity | 720 | 0.2605 | **0.2607** | **0.3384** |
-| 🚦 traffic | 96 | 0.5190 | **0.5670** | **0.3788** |
-| 🚦 traffic | 192 | 0.5295 | **0.6052** | **0.3943** |
-| 🚦 traffic | 336 | 0.5441 | **0.6328** | **0.4027** |
-| 🚦 traffic | 720 | 0.5735 | **0.6631** | **0.4129** |
 
 ---
 
