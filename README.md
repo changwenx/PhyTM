@@ -37,7 +37,7 @@ PhyTM/
 │   └── 🧠 phytm.py             # PhyTM main model (tri-modal gated fusion)
 ├── 📂 data/                    # Data loading
 │   ├── __init__.py
-│   └── dataset.py             # TimeSeriesDataset (ETT 12-4-4 split, others 7:1:2)
+│   └── dataset.py             # TimeSeriesDataset
 ├── 🏋️  engine/                  # Training engine
 │   ├── __init__.py
 │   └── trainer.py             # run_experiment(): train / val / test for a single run
